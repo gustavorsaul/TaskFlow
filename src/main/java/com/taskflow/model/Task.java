@@ -19,7 +19,8 @@ public class Task {
 
     private String title;
 
-    @Column(length = 1000)
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     private Integer timeEstimated; // em minutos
