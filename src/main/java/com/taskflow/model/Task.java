@@ -1,5 +1,35 @@
 package com.taskflow.model;
 
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "tasks")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Task {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String title;
+
+    @Column(length = 1000)
+    private String description;
+
+    private Integer timeEstimated; // em minutos
+
+    private boolean completed;
+
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 }
