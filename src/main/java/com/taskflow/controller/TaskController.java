@@ -85,13 +85,25 @@ public class TaskController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found"));
 
         String fullPrompt = String.format("""
-            Título: %s
-            Descrição: %s
-
-            Pergunta: %s
-
-            Me responda em no máximo 15 linhas, tentando ser objetivo.
+        Você é um assistente especializado em produtividade e gestão de tarefas.
+        
+        A seguir está uma tarefa cadastrada pelo usuário:
+        - Título: %s
+        - Descrição: %s
+        
+        Pergunta do usuário:
+        "%s"
+        
+        Gere uma resposta **específica para o contexto dessa tarefa**, evitando repetições e generalidades.
+        A resposta deve:
+        - Conter no máximo 10 a 15 linhas;
+        - Ser objetiva e prática;
+        - Trazer insights aplicáveis (ex.: próximos passos, ideias concretas ou possíveis soluções);
+        - Usar linguagem clara e direta.
+        
+        Se a pergunta for vaga, deduza a intenção mais provável e dê uma resposta útil.
         """, task.getTitle(), task.getDescription(), prompt);
+
 
         String response = geminiService.askGemini(fullPrompt, apiKey);
 

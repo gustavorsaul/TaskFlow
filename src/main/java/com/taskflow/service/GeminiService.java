@@ -19,13 +19,6 @@ public class GeminiService {
                             .apiKey(apiKey)
                             .build();
 
-            GenerateContentConfig config = 
-                GenerateContentConfig.builder()
-                    .temperature(0.4f)
-                    .topP(0.8f)
-                    .build();
-
-
             GenerateContentResponse response = 
                 client.models.generateContent(
                     "gemini-2.5-flash", 

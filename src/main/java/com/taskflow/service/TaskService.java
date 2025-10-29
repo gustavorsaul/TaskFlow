@@ -33,7 +33,6 @@ public class TaskService {
         return repository.findById(id).map(task -> {
             task.setTitle(updatedTask.getTitle());
             task.setDescription(updatedTask.getDescription());
-            task.setTimeEstimated(updatedTask.getTimeEstimated());
             task.setCompleted(updatedTask.isCompleted());
             return repository.save(task);
         }).orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));

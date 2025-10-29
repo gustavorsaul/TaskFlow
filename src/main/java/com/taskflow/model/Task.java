@@ -23,14 +23,5 @@ public class Task {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    private Integer timeEstimated; // em minutos
-
     private boolean completed;
-
-    private LocalDateTime createdAt;
-
-    @PrePersist
-    public void onCreate() {
-        createdAt = LocalDateTime.now();
-    }
 }
