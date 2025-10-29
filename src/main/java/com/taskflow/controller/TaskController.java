@@ -1,13 +1,16 @@
 package com.taskflow.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.taskflow.model.Task;
 import com.taskflow.service.GeminiService;
@@ -67,26 +70,36 @@ public class TaskController {
     }
 
     @PostMapping("/{id}/ai")
-    public Map<String, String> askGeminiForTask(
+    public ResponseEntity<Map<String, String>> askGeminiForTask(
             @PathVariable Long id,
-            @RequestBody Map<String, String> body
-    ) {
-        String prompt = body.get("prompt");
-        String apiKey = body.get("apiKey");
+            @RequestBody Map<String, String> requestBody) {
 
-        if (prompt == null || prompt.isEmpty() || apiKey == null || apiKey.isEmpty()) {
-            throw new IllegalArgumentException("Os campos 'prompt' e 'apiKey' são obrigatórios");
+        String apiKey = requestBody.get("apiKey");
+        String prompt = requestBody.get("prompt");
+
+        if (apiKey == null || prompt == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "api e prompt são obrigatórios");
         }
 
         Task task = taskService.findById(id)
-                .orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found"));
 
-        // Concatenar contexto da tarefa + prompt
-        String fullPrompt = task.getTitle() + "\n" + task.getDescription() + "\n\n" + prompt;
+        String fullPrompt = String.format("""
+            Título: %s
+            Descrição: %s
 
-        // Chamada para a IA usando a API Key recebida
-        String responseText = geminiService.askGemini(fullPrompt, apiKey);
+            Pergunta: %s
 
-        return Map.of("response", responseText);
+            Me responda em no máximo 15 linhas, tentando ser objetivo.
+        """, task.getTitle(), task.getDescription(), prompt);
+
+        String response = geminiService.askGemini(fullPrompt, apiKey);
+
+        return ResponseEntity.ok(
+            java.util.Collections.singletonMap("response", response != null ? response : "")
+        );
+
     }
+
+
 }

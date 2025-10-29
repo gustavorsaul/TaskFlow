@@ -14,23 +14,28 @@ public class GeminiService {
 
     public String askGemini(String prompt, String apiKey) {
 
-        Client client = Client.builder()
-                        .apiKey(apiKey)
-                        .build();
+        try {
+            Client client = Client.builder()
+                            .apiKey(apiKey)
+                            .build();
 
-        GenerateContentConfig config = 
-            GenerateContentConfig.builder()
-                .maxOutputTokens(100)
-                .build();
-                
+            GenerateContentConfig config = 
+                GenerateContentConfig.builder()
+                    .temperature(0.4f)
+                    .topP(0.8f)
+                    .build();
 
-        GenerateContentResponse response = 
-            client.models.generateContent(
-                "gemini-2.5-flash", 
-                prompt, 
-                config);
-                
-        return response.text();
+
+            GenerateContentResponse response = 
+                client.models.generateContent(
+                    "gemini-2.5-flash", 
+                    prompt, 
+                    null);
+
+            return response.text();
+        } catch (Exception e) {
+            return "Erro ao gerar a resposta: " + e.getMessage();
+        }
     }
 
 }
