@@ -102,6 +102,9 @@ public class TaskController {
         - Usar linguagem clara e direta.
         
         Se a pergunta for vaga, deduza a intenção mais provável e dê uma resposta útil.
+
+        Me responda apenas em formato de texto puro, sem utilizar markdown. Busque apenas seguir regras ortográficas
+        e de pontuação básicas, além de parágrafos e linhas em branco para organizar o texto.
         """, task.getTitle(), task.getDescription(), prompt);
 
 
