@@ -3,7 +3,6 @@ package com.taskflow.service;
 import org.springframework.stereotype.Service;
 
 import com.google.genai.Client;
-import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
 
 import lombok.RequiredArgsConstructor;

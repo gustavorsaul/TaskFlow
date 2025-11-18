@@ -55,7 +55,7 @@ body {
   padding: 12px 16px;
   margin-bottom: 8px;
   background-color: #f9fafb;
-  border-radius: 8px;
+  border-radius: 2px;
   cursor: pointer;
   transition: all 0.2s ease;
   border: 1px solid transparent;
@@ -69,9 +69,9 @@ body {
 }
 
 .task-item.active {
-  background-color: #eff6ff;
-  border-color: #3b82f6;
-  color: #1e40af;
+  background-color: #fff5e6;
+  border-color: #fea116;
+  color: #fea116;
   font-weight: 500;
 }
 
@@ -80,7 +80,7 @@ body {
   border: none;
   background: #fea116;
   color: #111827;
-  border-radius: 4px;
+  border-radius: 2px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
@@ -123,7 +123,7 @@ body {
   border: none;
   background: #fea116;
   color: #111827;
-  border-radius: 4px;
+  border-radius: 2px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
@@ -193,7 +193,7 @@ body {
   background: #fea116;
   color: #111827;
   border: none;
-  border-radius: 4px;
+  border-radius: 2px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
